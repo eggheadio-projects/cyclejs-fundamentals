@@ -18,13 +18,21 @@ function domDriver(text$) {
 }
 
 function logDriver(msg$) {
-    msg$.subscribe({
-        next: msg => {
-            console.log(msg);
-        }
-    })
+    msg$.subscribe({ next: msg => { console.log(msg); }})
 }
 
-const sink = main();
-domDriver(sink.DOM);
-logDriver(sink.log);
+function run(mainFn, drivers) {
+    const sinks = mainFn();
+    Object.keys(drivers).forEach(key => {
+        if (sinks[key]) {
+            drivers[key](sinks[key]);
+        }
+    });
+}
+
+run(main, {
+    DOM: domDriver,
+    log: logDriver,
+    
+});
+
