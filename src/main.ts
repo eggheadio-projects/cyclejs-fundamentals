@@ -3,9 +3,9 @@ import fromEvent from 'xstream/extra/fromEvent'
 import { run } from 'Cycle'
 
 function main(sources) {
-    const click$ = sources.DOM;
+    const mouseover$ = sources.DOM.selectEvents('span', 'mouseover');
     return {
-        DOM: click$.startWith(null).map(() => 
+        DOM: mouseover$.startWith(null).map(() => 
             xs.periodic(1000)                       
              .fold(prev => prev + 1, 0)
           ).flatten()
@@ -48,7 +48,12 @@ function domDriver(obj$) {
         const element = createElement(obj);
         container.appendChild(element)
      }});  
-     const domSource = fromEvent(document, 'click');
+     const domSource = {
+         selectEvents: function (tagName, eventType) {
+             return fromEvent(document, eventType)
+                .filter(ev => ev.target.tagName === tagName.toUpperCase());
+         }
+     }
      return domSource;
 }
 
