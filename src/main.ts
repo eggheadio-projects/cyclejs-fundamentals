@@ -2,6 +2,27 @@ import xs from 'xstream'
 import fromEvent from 'xstream/extra/fromEvent'
 import { run } from 'Cycle'
 
+function h(tagName, children) {
+    return {
+        tagName: tagName,
+        children: children,
+    };
+}
+
+function h1(children) {
+    return {
+        tagName: 'H1',
+        children: children,
+    }
+}
+
+function span(children) {
+    return {
+        tagName: 'SPAN',
+        children: children,
+    }
+}
+
 function main(sources) {
     const mouseover$ = sources.DOM.selectEvents('span', 'mouseover');
     return {
@@ -9,18 +30,15 @@ function main(sources) {
             xs.periodic(1000)                       
              .fold(prev => prev + 1, 0)
           ).flatten()
-           .map(i => ({
-               tagName: 'H1',
-               children: [
-                    {
-                        tagName: 'SPAN',
-                        children: [
-                            `Seconds elapsed: ${i}`
-                        ]
-                    },
-                ]
-           })),
-        log: xs.periodic(2000)                       
+             .map(i => 
+               h1([
+                 span([
+                    `Seconds elapsed: ${i}`
+                ])
+              ])
+            ),
+            
+         log: xs.periodic(2000)                       
            .fold(prev => prev + 1, 0)
     } 
 }
