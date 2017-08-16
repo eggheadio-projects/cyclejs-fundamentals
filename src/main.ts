@@ -9,7 +9,17 @@ function main(sources) {
             xs.periodic(1000)                       
              .fold(prev => prev + 1, 0)
           ).flatten()
-           .map(i => `Seconds elapsed: ${i}`),
+           .map(i => ({
+               tagName: 'H1',
+               children: [
+                    {
+                        tagName: 'SPAN',
+                        children: [
+                            `Seconds elapsed: ${i}`
+                        ]
+                    },
+                ]
+           })),
         log: xs.periodic(2000)                       
            .fold(prev => prev + 1, 0)
     } 
@@ -18,12 +28,26 @@ function main(sources) {
 // source = input (read) effect
 // sink = output (write) effect
 
-function domDriver(text$) {
-   text$.subscribe({
-    next: str => {
-        const elem = document.querySelector('#app');
-        elem.textContent = str;
-     }})  
+function domDriver(obj$) {
+    function createElement(obj) {
+        const element = document.createElement(obj.tagName);
+        obj.children.forEach(child => {
+            if (typeof child === 'object') {
+                element.appendChild(createElement(child));
+            } else {
+              element.textContent = child;
+            }
+        })
+        return element
+    }
+    
+    
+   obj$.subscribe({ next: obj => {
+        const container = document.querySelector('#app');
+        container.textContent = '';
+        const element = createElement(obj);
+        container.appendChild(element)
+     }});  
      const domSource = fromEvent(document, 'click');
      return domSource;
 }
@@ -31,42 +55,6 @@ function domDriver(text$) {
 function logDriver(msg$) {
     msg$.subscribe({ next: msg => { console.log(msg); }})
 }
-
-// fakeA = ...
-// b = f(fakeA)
-// a = g(b)
-// fakeA.behaveLike(a)
-
-
-/*function run(mainFn, drivers) {
-    const fakeSinks = {};
-    Object.keys(drivers).forEach(key => {
-       fakeSinks[key] = xs.create(); 
-    });
-    
-    const sources = {};
-    Object.keys(drivers).forEach(key => {
-        sources[key] = drivers[key](fakeSinks[key]);
-    });
-    
-    const sinks = mainFn(sources);
-    
-    Object.keys(sinks).forEach(key => {
-        fakeSinks[key].imitate(sinks[key]);
-    });
-    
-    //const fakeDOMSink = xs.create();
-    //const domSource = domDriver(fakeDOMSink);
-    //const sinks = mainFn({DOM: domSource});
-    //fakeDOMSink.imitate(sinks.DOM)
-    
-}
-
-run(main, {
-    DOM: domDriver,
-    log: logDriver,
-    
-});*/
 
 // Cycle.run
 run(main, {
