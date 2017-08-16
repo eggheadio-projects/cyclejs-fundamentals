@@ -1,5 +1,6 @@
 import xs from 'xstream'
 import fromEvent from 'xstream/extra/fromEvent'
+import { run } from 'Cycle'
 
 function main(sources) {
     const click$ = sources.DOM;
@@ -37,24 +38,40 @@ function logDriver(msg$) {
 // fakeA.behaveLike(a)
 
 
-function run(mainFn, drivers) {
-    const fakeDOMSink = xs.create();
-    const domSource = domDriver(fakeDOMSink);
-    const sinks = mainFn({DOM: domSource});
-    fakeDOMSink.imitate(sinks.DOM)
+/*function run(mainFn, drivers) {
+    const fakeSinks = {};
+    Object.keys(drivers).forEach(key => {
+       fakeSinks[key] = xs.create(); 
+    });
     
+    const sources = {};
+    Object.keys(drivers).forEach(key => {
+        sources[key] = drivers[key](fakeSinks[key]);
+    });
     
-   /* Object.keys(drivers).forEach(key => {
-        if (sinks[key]) {
-            drivers[key](sinks[key]);
-        }
-    });*/
+    const sinks = mainFn(sources);
+    
+    Object.keys(sinks).forEach(key => {
+        fakeSinks[key].imitate(sinks[key]);
+    });
+    
+    //const fakeDOMSink = xs.create();
+    //const domSource = domDriver(fakeDOMSink);
+    //const sinks = mainFn({DOM: domSource});
+    //fakeDOMSink.imitate(sinks.DOM)
+    
 }
 
 run(main, {
     DOM: domDriver,
     log: logDriver,
     
+});*/
+
+// Cycle.run
+run(main, {
+    DOM: domDriver,
+    log: logDriver,
 });
 
 
