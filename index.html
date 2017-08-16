@@ -1,15 +1,20 @@
 <!DOCTYPE html>
 <html>
-<head>
-<meta charset="utf-8">
-  <title>JS Bin</title>
-</head>
-<body>
-  <div id="app"></div>
-  
-  <script src="https://unpkg.com/xstream@10.9.0/dist/xstream.js"></script>
-  <script>window.xs=xstream.default</script>
-  <script src="script.js"></script>
-</body>
-</html>
+
+  <head>
+    <script src="https://unpkg.com/systemjs/dist/system.js"></script>
+    <script src="typescript-config.js"></script>
+    <script src="app-config.js"></script>
+    
+  </head>
+
+  <body>
+    <div id="app"></div>
+    
+    <script>
+      System.import('app')
+        .catch(console.error.bind(console));
+    </script>
+  </body>
+
 </html>
