@@ -1,23 +1,26 @@
 import { run } from "@cycle/run"
-import { div, label, input, hr, h1, makeDOMDriver } from "@cycle/dom"
+import { button, p, label, div, makeDOMDriver } from "@cycle/dom"
 import xs from "xstream"
 
 function main(sources) {
+    const decClick$ = sources.DOM.select('.dec').events('click');
+    const incClick$ = sources.DOM.select('.inc').events('click');
     
-    // -------------------->
-    // ''---w---wo---wor----->
-    // div--div--div--div---->
+    const dec$ = decClick$.map(() => -1); // --(-1)-----------(-1)-->
+    const inc$ = incClick$.map(() => +1); // ---------(+1)---------->
     
-    const inputEv$ = sources.DOM.select('.field').events('input');
-    const name$ = inputEv$.map(ev => ev.target.value).startWith('')
+    const delta$ = xs.merge(dec$, inc$);  // --(-1)---(+1)----(-1)-->
+    
+    const number$ = delta$.fold((prev, x) => prev + x, 0);
     
     return {
-        DOM: name$.map(name => 
+        DOM: number$.map(number =>
           div([
-            label(['Name:']),
-            input('.field', {attrs: {type: 'text'}}),
-            hr(),
-            h1('Hello ' + name +'!')
+            button('.dec', 'Decrement'),
+            button('.inc', 'Increment'),
+            p([
+              label('Counr: ' + number)
+            ])
           ])
         )
     }
