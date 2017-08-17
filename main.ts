@@ -1,5 +1,3 @@
-console.clear();
-console.log(new Date())
 import { run } from "@cycle/run"
 import { h, h1, span, makeDOMDriver } from "@cycle/dom"
 import xs from "xstream"
