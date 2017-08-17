@@ -1,20 +1,14 @@
-<!DOCTYPE html>
-<html>
+<!doctype html>
+<meta charset="utf-8">
+<script src="//unpkg.com/systemjs/dist/system.js"></script>
+<script src="typescript-config.js"></script>
+<script src="app-config.js"></script>
+<script src="cycle-plnkr-bundle.js"></script>
 
-  <head>
-    <script src="https://unpkg.com/systemjs/dist/system.js"></script>
-    <script src="typescript-config.js"></script>
-    <script src="app-config.js"></script>
-    
-  </head>
 
-  <body>
-    <div id="app"></div>
-    
+<body>
+    <div id="main"></div>
     <script>
-      System.import('app')
-        .catch(console.error.bind(console));
+        SystemJS.import('main.ts');
     </script>
-  </body>
-
-</html>
+</body>
