@@ -3,24 +3,28 @@ import { div, label, input, h2, makeDOMDriver } from "@cycle/dom"
 import { makeHTTPDriver } from "@cycle/http"
 import xs from "xstream"
 
-// DOM READ: detect sliding event
-// recalculate BMI = w / h*h
-// DOM WRITE: display BMI
+function intent(domSource) {
+  const changeWeight$ = domSource.select('.weight').events('input')
+      .map(ev => ev.target.value)
+    const changeHeight$ = domSource.select('.height').events('input')
+      .map(ev => ev.target.value)
+      
+  return { changeWeight$, changeHeight$ };
+}
 
-function main(sources) {
-    const changeWeight$ = sources.DOM.select('.weight').events('input')
-      .map(ev => ev.target.value)
-    const changeHeight$ = sources.DOM.select('.height').events('input')
-      .map(ev => ev.target.value)
-    
-    const state$ = xs.combine(changeWeight$.startWith(70), changeHeight$.startWith(179))
+function model(actions) {
+  const {changeWeight$, changeHeight$} = actions;
+  
+  return xs.combine(changeWeight$.startWith(70), changeHeight$.startWith(179))
         .map(([weight, height]) => {
             const heightMeters = height * 0.01;
             const bmi = Math.round(weight / (heightMeters * heightMeters))
             return {bmi, weight, height};
         })
-    
-    const vdom$ = state$.map(state =>
+}
+
+function view(state$){
+  return state$.map(state =>
         div([
           div([
             label('Weight: ' + state.weight + 'kg'),
@@ -33,6 +37,14 @@ function main(sources) {
           h2('BMI is ' + state.bmi)
         ])    
     )
+  
+}
+
+function main(sources) {
+  const actions = intent(sources.DOM);
+  const state$ = model(actions);
+  const vdom$ = view(state$);
+    
     return {
         DOM: vdom$,
     }
