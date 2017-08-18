@@ -48,15 +48,47 @@ function labeledSlider(sources) {
 }
 
 function main(sources) {
-  const props$ = xs.of({
-      label: 'Height',
-      unit: 'cm',
+  const weightProps$ = xs.of({
+      label: 'Weight',
+      unit: 'kg',
       min: 40,
       max: 150,
       init: 40,
     })
-  const sinks = labeledSlider({...sources, props: props$});
-  return sinks;
+  const weightDOMSource = sources.DOM.select('.weight')
+  const weightSinks = labeledSlider({
+    ...sources, DOM: weightDOMSource, props: weightProps$
+  });
+  const weightVDOM$ = weightSinks.DOM.map(vdom => {
+    vdom.sel += '.weight';
+    return vdom;
+  })
+  const heightProps$ = xs.of({
+      label: 'Height',
+      unit: 'cm',
+      min: 140,
+      max: 220,
+      init: 440,
+    })
+  const heightDOMSource = sources.DOM.select('.height')
+  const heightSinks = labeledSlider({
+    ...sources, DOM: heightDOMSource, props: heightProps$
+  });
+  const heightVDOM$ = heightSinks.DOM.map(vdom => {
+    vdom.sel += '.height';
+    return vdom;
+  })
+  const vdom$ = xs.combine(weightVDOM$, heightVDOM$)
+    .map(([weightVDOM, heightVDOM]) => 
+      div([
+        weightVDOM,
+        heightVDOM
+      ])
+    )
+  
+  return {
+    DOM: vdom$,
+  }
 }
 
 const drivers = {
