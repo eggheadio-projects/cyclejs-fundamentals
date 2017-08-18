@@ -1,5 +1,6 @@
 import { run } from "@cycle/run"
 import { div, label, input, h2, makeDOMDriver } from "@cycle/dom"
+import { makeHTTPDriver } from "@cycle/http"
 import xs from "xstream"
 
 function intent(domSource) {
@@ -35,7 +36,7 @@ function view(state$){
   
 }
 
-function main(sources) {
+function labeledSlider(sources) {
   const props$ = sources.props
   const actions = intent(sources.DOM);
   const state$ = model(actions, props$);
@@ -46,15 +47,20 @@ function main(sources) {
     }
 }
 
-const drivers = {
-    DOM: makeDOMDriver('#main'),
-    props: () => xs.of({
+function main(sources) {
+  const props$ = xs.of({
       label: 'Height',
       unit: 'cm',
       min: 40,
       max: 150,
       init: 40,
     })
+  const sinks = labeledSlider({...sources, props: props$});
+  return sinks;
+}
+
+const drivers = {
+    DOM: makeDOMDriver('#main'),
 }
 
 run(main, drivers);
