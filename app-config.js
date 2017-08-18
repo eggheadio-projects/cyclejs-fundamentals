@@ -3,6 +3,7 @@ SystemJS.config({
   map: {
     "@cycle/dom": "npm:@cycle/dom@18.1.0",
     "@cycle/http": "npm:@cycle/http@13.3.0",
+    "@cycle/isolate": "npm:@cycle/isolate@3.1.0",
     "@cycle/run": "npm:@cycle/run@3.2.0",
     "assert": "npm:jspm-nodelibs-assert@0.2.1",
     "buffer": "npm:jspm-nodelibs-buffer@0.2.3",

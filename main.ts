@@ -1,6 +1,6 @@
 import { run } from "@cycle/run"
 import { div, label, input, h2, makeDOMDriver } from "@cycle/dom"
-import { makeHTTPDriver } from "@cycle/http"
+import isolate from "@cycle/isolate"
 import xs from "xstream"
 
 function intent(domSource) {
@@ -55,14 +55,11 @@ function main(sources) {
       max: 150,
       init: 40,
     })
-  const weightDOMSource = sources.DOM.select('.weight')
-  const weightSinks = labeledSlider({
-    ...sources, DOM: weightDOMSource, props: weightProps$
+  const weightSlider = isolate(labeledSlider, '.weight');
+  const weightSinks = weightSlider({
+    ...sources, props: weightProps$
   });
-  const weightVDOM$ = weightSinks.DOM.map(vdom => {
-    vdom.sel += '.weight';
-    return vdom;
-  })
+  
   const heightProps$ = xs.of({
       label: 'Height',
       unit: 'cm',
@@ -70,15 +67,12 @@ function main(sources) {
       max: 220,
       init: 440,
     })
-  const heightDOMSource = sources.DOM.select('.height')
-  const heightSinks = labeledSlider({
-    ...sources, DOM: heightDOMSource, props: heightProps$
+  const heightSlider = isolate(labeledSlider, '.height');
+  const heightSinks = heightSlider({
+    ...sources, props: heightProps$
   });
-  const heightVDOM$ = heightSinks.DOM.map(vdom => {
-    vdom.sel += '.height';
-    return vdom;
-  })
-  const vdom$ = xs.combine(weightVDOM$, heightVDOM$)
+
+  const vdom$ = xs.combine(weightSinks.DOM, heightSinks.DOM)
     .map(([weightVDOM, heightVDOM]) => 
       div([
         weightVDOM,
