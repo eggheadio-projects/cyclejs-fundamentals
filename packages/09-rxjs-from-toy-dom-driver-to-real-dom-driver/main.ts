@@ -1,28 +1,20 @@
-import { run } from "@cycle/run"
-import { h, h1, span, makeDOMDriver } from "@cycle/dom"
-import xs from "xstream"
-import fromEvent from 'xstream/extra/fromEvent'
+import { run } from "@cycle/run";
+import { h, h1, span, makeDOMDriver } from "@cycle/dom";
+import xs from "xstream";
+import fromEvent from "xstream/extra/fromEvent";
 
 function main(sources) {
-    const mouseover$ = sources.DOM.select('span').events('mouseover');
-    return {
-        DOM: mouseover$.startWith(null).map(() => 
-            xs.periodic(1000)                       
-             .fold(prev => prev + 1, 0)
-          ).flatten()
-             .map(i => 
-               h1([
-                 span([
-                    `Seconds elapsed: ${i}`
-                ])
-              ])
-            ),
-            
-         log: xs.periodic(2000)                       
-           .fold(prev => prev + 1, 0)
-    } 
-}
+  const mouseover$ = sources.DOM.select("span").events("mouseover");
+  return {
+    DOM: mouseover$
+      .startWith(null)
+      .map(() => xs.periodic(1000).fold(prev => prev + 1, 0))
+      .flatten()
+      .map(i => h1([span([`Seconds elapsed: ${i}`])])),
 
+    log: xs.periodic(2000).fold(prev => prev + 1, 0)
+  };
+}
 
 /*
 function makeDOMDriver(mountSelector) {
@@ -58,14 +50,15 @@ function makeDOMDriver(mountSelector) {
 */
 
 function logDriver(msg$) {
-    msg$.subscribe({ next: msg => { console.log(msg); }})
+  msg$.subscribe({
+    next: msg => {
+      console.log(msg);
+    }
+  });
 }
 
 // Cycle.run
 run(main, {
-    DOM: makeDOMDriver('#main'),
-    log: logDriver,
+  DOM: makeDOMDriver("#main"),
+  log: logDriver
 });
-
-
-

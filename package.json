@@ -1,0 +1,9 @@
+{
+  "repository": "git@github.com:eggheadio-projects/cyclejs-fundamentals.git",
+  "scripts": {
+    "format": "prettier **/*.{js,ts} -l --write || :"
+  },
+  "devDependencies": {
+    "prettier": "^1.14.3"
+  }
+}
