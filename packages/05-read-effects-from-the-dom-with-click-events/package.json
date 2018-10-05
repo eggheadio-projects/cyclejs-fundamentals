@@ -6,7 +6,7 @@
     "start": "parcel index.html --open"
   },
   "dependencies": {
-    "xstream": "~10.9.0"
+    "xstream": "~11.7.0"
   },
   "devDependencies": {
     "parcel-bundler": "^1.10.1",
