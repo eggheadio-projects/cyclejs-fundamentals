@@ -1,3 +1,5 @@
+import xs from "xstream";
+
 // Logic
 function main() {
   return xs

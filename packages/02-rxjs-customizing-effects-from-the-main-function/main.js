@@ -1,3 +1,5 @@
+import xs from "xstream";
+
 function main() {
   return {
     DOM: xs

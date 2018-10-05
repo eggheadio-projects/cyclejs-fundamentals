@@ -1,6 +1,5 @@
 import { run } from "@cycle/run";
 import { div, label, input, h2, makeDOMDriver } from "@cycle/dom";
-import { makeHTTPDriver } from "@cycle/http";
 import xs from "xstream";
 
 function intent(domSource) {

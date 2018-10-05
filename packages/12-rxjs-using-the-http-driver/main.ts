@@ -1,7 +1,6 @@
 import { run } from "@cycle/run";
 import { button, p, h1, h4, a, div, makeDOMDriver } from "@cycle/dom";
 import { makeHTTPDriver } from "@cycle/http";
-import xs from "xstream";
 
 // READ DOM: button cick
 // WRITE HTTP: request sent

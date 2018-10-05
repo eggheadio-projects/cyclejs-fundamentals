@@ -1,6 +1,6 @@
 import xs from "xstream";
 import fromEvent from "xstream/extra/fromEvent";
-import { run } from "Cycle";
+import { run } from "@cycle/run";
 
 function h(tagName, children) {
   return {

@@ -1,6 +1,5 @@
 import { run } from "@cycle/run";
 import { div, label, input, hr, h1, makeDOMDriver } from "@cycle/dom";
-import xs from "xstream";
 
 function main(sources) {
   // -------------------->

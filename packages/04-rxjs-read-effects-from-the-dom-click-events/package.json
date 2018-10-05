@@ -1,0 +1,15 @@
+{
+  "name": "04-rxjs-read-effects-from-the-dom-click-events",
+  "version": "0.0.0-unversioned",
+  "license": "ISC",
+  "scripts": {
+    "start": "parcel index.html --open"
+  },
+  "dependencies": {
+    "xstream": "~10.9.0"
+  },
+  "devDependencies": {
+    "parcel-bundler": "^1.10.1",
+    "typescript": "^3.1.1"
+  }
+}
