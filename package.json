@@ -1,7 +1,9 @@
 {
   "repository": "git@github.com:eggheadio-projects/cyclejs-fundamentals.git",
   "scripts": {
-    "format": "prettier **/*.{js,ts} -l --write || :"
+    "format": "prettier **/*.{js,ts} -l --write || :",
+    "update:html-title": "yarn update:all sed -i '' 's/<title>.*<\\/title>/<title>{}<\\/title>/' {}/index.html",
+    "update:all": "aux() { cd packages && find * -type d -maxdepth 0 -exec \"$@\" \\;; }; aux"
   },
   "devDependencies": {
     "prettier": "^1.14.3"
