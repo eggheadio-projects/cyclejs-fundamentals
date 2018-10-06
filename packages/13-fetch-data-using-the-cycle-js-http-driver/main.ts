@@ -1,4 +1,4 @@
-import { run } from "@cycle/run";
+import run from "@cycle/run";
 import { button, p, h1, h4, a, div, makeDOMDriver } from "@cycle/dom";
 import { makeHTTPDriver } from "@cycle/http";
 

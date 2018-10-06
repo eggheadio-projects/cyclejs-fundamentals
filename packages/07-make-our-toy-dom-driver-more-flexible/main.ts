@@ -1,6 +1,6 @@
 import xs from "xstream";
 import fromEvent from "xstream/extra/fromEvent";
-import { run } from "@cycle/run";
+import run from "@cycle/run";
 
 function main(sources) {
   const click$ = sources.DOM;

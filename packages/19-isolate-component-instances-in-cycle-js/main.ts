@@ -1,4 +1,4 @@
-import { run } from "@cycle/run";
+import run from "@cycle/run";
 import { div, label, input, h2, makeDOMDriver } from "@cycle/dom";
 import isolate from "@cycle/isolate";
 import xs from "xstream";

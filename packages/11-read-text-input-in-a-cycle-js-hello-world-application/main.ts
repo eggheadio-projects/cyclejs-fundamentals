@@ -1,4 +1,4 @@
-import { run } from "@cycle/run";
+import run from "@cycle/run";
 import { div, label, input, hr, h1, makeDOMDriver } from "@cycle/dom";
 
 function main(sources) {

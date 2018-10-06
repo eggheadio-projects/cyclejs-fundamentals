@@ -1,4 +1,4 @@
-import { run } from "@cycle/run";
+import run from "@cycle/run";
 import { h, h1, span, makeDOMDriver } from "@cycle/dom";
 import xs from "xstream";
 // import fromEvent from "xstream/extra/fromEvent";
