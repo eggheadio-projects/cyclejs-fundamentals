@@ -75,7 +75,7 @@ function main(sources) {
     unit: "cm",
     min: 140,
     max: 220,
-    init: 440
+    init: 140
   });
   const heightSlider = isolate(labeledSlider, ".height");
   const heightSinks = heightSlider({

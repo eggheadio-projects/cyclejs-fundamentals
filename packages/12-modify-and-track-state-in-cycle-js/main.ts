@@ -18,7 +18,7 @@ function main(sources) {
       div([
         button(".dec", "Decrement"),
         button(".inc", "Increment"),
-        p([label("Counr: " + number)])
+        p([label("Count: " + number)])
       ])
     )
   };
