@@ -6,11 +6,11 @@ function intent(domSource) {
   const changeWeight$ = domSource
     .select(".weight")
     .events("input")
-    .map(ev => ev.target.value);
+    .map(ev => (ev.target as HTMLInputElement).value);
   const changeHeight$ = domSource
     .select(".height")
     .events("input")
-    .map(ev => ev.target.value);
+    .map(ev => (ev.target as HTMLInputElement).value);
 
   return { changeWeight$, changeHeight$ };
 }
@@ -20,7 +20,7 @@ function model(actions) {
 
   return xs
     .combine(changeWeight$.startWith(70), changeHeight$.startWith(179))
-    .map(([weight, height]) => {
+    .map(([weight, height]: [number, number]) => {
       const heightMeters = height * 0.01;
       const bmi = Math.round(weight / (heightMeters * heightMeters));
       return { bmi, weight, height };

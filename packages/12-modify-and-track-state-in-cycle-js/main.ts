@@ -11,14 +11,14 @@ function main(sources) {
 
   const delta$ = xs.merge(dec$, inc$); // --(-1)---(+1)----(-1)-->
 
-  const number$ = delta$.fold((prev, x) => prev + x, 0);
+  const number$ = delta$.fold((prev, x: number) => prev + x, 0);
 
   return {
     DOM: number$.map(number =>
       div([
         button(".dec", "Decrement"),
         button(".inc", "Increment"),
-        p([label("Counr: " + number)])
+        p([label("Count: " + number)])
       ])
     )
   };
