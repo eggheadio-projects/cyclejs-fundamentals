@@ -49,7 +49,7 @@ function domDriver(obj$) {
   const domSource = {
     selectEvents: function(tagName, eventType) {
       return fromEvent(document, eventType).filter(
-        ev => (ev.target as Element).tagName === tagName.toUpperCase()
+        ev => ev.target.tagName === tagName.toUpperCase()
       );
     }
   };

@@ -9,14 +9,14 @@ import xs from "xstream";
 function main(sources) {
   const changeWeight$ = sources.DOM.select(".weight")
     .events("input")
-    .map(ev => (ev.target as HTMLInputElement).value);
+    .map(ev => ev.target.value);
   const changeHeight$ = sources.DOM.select(".height")
     .events("input")
-    .map(ev => (ev.target as HTMLInputElement).value);
+    .map(ev => ev.target.value);
 
   const state$ = xs
     .combine(changeWeight$.startWith(70), changeHeight$.startWith(179))
-    .map(([weight, height]: [number, number]) => {
+    .map(([weight, height]) => {
       const heightMeters = height * 0.01;
       const bmi = Math.round(weight / (heightMeters * heightMeters));
       return { bmi, weight, height };

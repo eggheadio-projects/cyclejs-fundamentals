@@ -87,7 +87,7 @@ function main(sources) {
 
   const bmi$ = xs
     .combine(weightSinks.value, heightSinks.value)
-    .map(([weight, height]: [number, number]) => {
+    .map(([weight, height]) => {
       const heightMeters = height * 0.01;
       const bmi = Math.round(weight / (heightMeters * heightMeters));
       return bmi;

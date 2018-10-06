@@ -78,7 +78,7 @@ function main(sources) {
     unit: "cm",
     min: 140,
     max: 220,
-    init: 140
+    init: 440
   });
   const heightDOMSource = sources.DOM.select(".height");
   const heightSinks = labeledSlider({
