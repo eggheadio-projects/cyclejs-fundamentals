@@ -8,10 +8,7 @@
     "clean": "rm -rf packages/*/{dist,.cache}",
     "clean:node_modules": "find . -name node_modules -delete",
     "format": "prettier **/*.{js,json,ts} -l --write --ignore-path .gitignore || :",
-    "update": "yarn update:package-name; yarn update:html-title",
-    "update:package-name": "yarn update:all sed -i '' 's/\"name\": \".*\"/\"name\": \"{}\"/' {}/package.json",
-    "update:html-title": "yarn update:all sed -i '' 's/<title>.*<\\/title>/<title>{}<\\/title>/' {}/index.html",
-    "update:all": "aux() { cd packages && find * -type d -maxdepth 0 -exec \"$@\" \\;; }; aux"
+    "latest": "yarn upgrade-interactive --latest"
   },
   "devDependencies": {
     "prettier": "^1.14.3"
