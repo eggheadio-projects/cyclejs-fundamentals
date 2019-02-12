@@ -6,11 +6,11 @@
     "start": "parcel index.html --open"
   },
   "dependencies": {
-    "@cycle/dom": "~21.1.0",
-    "@cycle/http": "~14.10.0",
-    "@cycle/run": "~5.0.0"
+    "@cycle/dom": "~22.3.0",
+    "@cycle/http": "~15.1.0",
+    "@cycle/run": "~5.2.0"
   },
   "devDependencies": {
-    "parcel-bundler": "^1.10.1"
+    "parcel-bundler": "^1.11.0"
   }
 }
