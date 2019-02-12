@@ -6,7 +6,7 @@
   "scripts": {
     "start": "aux() { cd $(ls -d packages/*\"$1\"*) && yarn start; }; aux",
     "clean": "rm -rf packages/*/{dist,.cache}",
-    "clean:node_modules": "find . -name node_modules -exec rm -r {} \\; || :",
+    "clean:node_modules": "find . -name node_modules | xargs rm -rf",
     "format": "prettier **/*.{js,json} -l --write --ignore-path .gitignore || :",
     "latest": "yarn upgrade-interactive --latest && yarn upgrade -L"
   },
